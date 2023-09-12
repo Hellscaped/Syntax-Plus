@@ -7,7 +7,7 @@
 ### Installation
 
 1. Install Tampermonkey [FireFox](https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/) [Chrome](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo)
-2. Install the script [here](https://github.com/Hellscaped/Syntax-Plus/releases/download/latest/SYNTAX+.user.js)
+2. Install the script [here](https://github.com/Hellscaped/Syntax-Plus/releases)
 
 ### Features
 - [x] A custom page in the site (/plus)
