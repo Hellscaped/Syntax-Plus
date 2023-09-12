@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
+import PlusPage from "./PlusPage";
+import { deleteAllChildren } from "./utils";
 import { awaitElement, log, addLocationChangeCallback } from "./utils";
 
 log("React script has successfully started");
@@ -12,10 +13,14 @@ log("React script has successfully started");
 async function main() {
     // Find <body/>. This can be any element. We wait until
     // the page has loaded enough for that element to exist.
-    const body = await awaitElement("body > div");
-    const container = document.createElement("div");
-    body.appendChild(container);
-    ReactDOM.render(<App />, container);
+    if (document.location == "https://www.syntax.eco/plus") {
+        const oldcontainer = document.getElementsByClassName("d-flex align-items-center justify-content-center")[0];
+        deleteAllChildren(oldcontainer);
+        const body = await awaitElement("body > div");
+        const container = document.createElement("div");
+        body.appendChild(container);
+        ReactDOM.render(<PlusPage />, container);
+    }
 }
 
 // Call `main()` every time the page URL changes, including on first load.

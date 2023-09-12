@@ -87,3 +87,9 @@ export async function awaitElement(selector) {
         delayedProbe();
     });
 }
+
+export async function deleteAllChildren(node) {
+    for (const child of node.children) {
+        child.remove();
+    }
+}
