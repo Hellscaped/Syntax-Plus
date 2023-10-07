@@ -1,3 +1,4 @@
 dist
 userscript/node_modules
 userscript/build
+node_modules

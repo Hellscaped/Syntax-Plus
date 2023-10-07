@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "eslint-plugin-userscripts": "^0.4.0"
+  }
+}
