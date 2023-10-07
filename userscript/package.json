@@ -3,7 +3,6 @@
     "version": "1.1.0",
     "private": true,
     "dependencies": {
-        "@uiw/react-textarea-code-editor": "^2.1.9",
         "react": "^17.0.2",
         "react-app-rewired": "^2.1.8",
         "react-dom": "^17.0.2",
