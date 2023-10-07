@@ -2,7 +2,7 @@
 // @name        Syntax+
 // @namespace   Hellscaped's Scripts
 // @match       https://www.syntax.eco/*
-// @grant        GM_addElement
+// @grant        GM_addStyle
 // @version     1.0
 // @author      Hellscaped
 // @description 9/11/2023, 9:08:17 PM

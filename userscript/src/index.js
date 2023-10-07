@@ -26,7 +26,11 @@ async function main() {
     // the page has loaded enough for that element to exist.
 
     // get the synplus logo
-
+    if (!localStorage.getItem("customcss")) {
+        localStorage.setItem("customcss", "/* Syntax+ Custom CSS */");
+    }
+    // eslint-disable-next-line no-undef
+    GM_addStyle(localStorage.getItem("customcss"));
     if (window.location.pathname in route_overrides) {
         const oldcontainer = document.getElementsByClassName("d-flex align-items-center justify-content-center")[0];
         deleteAllChildren(oldcontainer);

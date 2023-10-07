@@ -1,5 +1,9 @@
 {
   "devDependencies": {
     "eslint-plugin-userscripts": "^0.4.0"
+  },
+  "dependencies": {
+    "codemirror": "^6.0.1",
+    "react-codemirror2": "^7.3.0"
   }
 }
