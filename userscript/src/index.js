@@ -24,10 +24,20 @@ async function getRank(groupId, playerId) {
 async function getCollectibles(playerId) {
     // https://www.syntax.eco/public-api/v1/inventory/collectibles/id
     const url = `https://www.syntax.eco/public-api/v1/inventory/collectibles/${playerId}`;
-    const response = await fetch(url);
-    const json = await response.json();
+    var response = await fetch(url);
+    var json = await response.json();
     // check for "assets" in the json
+    var biglist = []
     if ("data" in json) {
+        if (json.next_page != null) {
+            while (json.next_page != null) {
+                var urlnext = url + "?page=" + json.next_page;
+                var response = await fetch(urlnext);
+                var json = await response.json();
+                biglist = biglist.concat(json["data"]);
+            }
+            return biglist;
+        }
         return json["data"]
     } else {
         return [];
@@ -81,16 +91,20 @@ async function main() {
             const rank = await getRank(23, userid);
             const isAdmin = await getRank(15, userid);
             if (Number(isAdmin) > 0) {
+                // get /html/body/div[2]/div/div[1]/div[1]/div[2]/div[1]/span
+                var bclogo = document.evaluate("/html/body/div[2]/div/div[1]/div[1]/div[2]/div[1]/span", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+                bclogo.remove();
+
                 const logo = document.createElement("img");
                 logo.src = "https://cdn.syntax.eco/75f2f7aa21c88470b2fd325523e0dbe36203a52758a29fef328f5613cac9b4ba1e8f85fbfdcf1c982c2ba1a4f09b9877a7558dc2618d092a494cb4246258cd3d";
-                logo.style = "height: 40px; width: 40px;";
+                logo.style = "height: 30px; width: 30px; margin-left: 5px; margin-bottom: 5px;";
                 nameholder.insertBefore(logo, userelement.nextSibling);
-            }
+            } else
             if (Number(rank) > 0) {
                 const nameholder = userelement.parentElement;
                 const logo = document.createElement("img");
                 logo.src = logoSrc;
-                logo.style = "height: 40px; width: 40px;";
+                logo.style = "height: 30px; width: 30px;";
                 nameholder.insertBefore(logo, userelement.nextSibling);
             }
             // User Recent Average Price sum of collectibles
@@ -106,7 +120,7 @@ async function main() {
             holder.className = "me-3"
             const title = document.createElement("p");
             title.className = "m-0 text-secondary w-100 text-center d-block";
-            title.innerText = "User RAP";
+            title.innerText = "RAP";
             title.style = "font-size: 15px;";
             const rapElement = document.createElement("p");
             rapElement.className = "m-0 text-decoration-none text-white w-100 text-center d-block";
