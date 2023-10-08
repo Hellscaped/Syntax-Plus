@@ -21,6 +21,19 @@ async function getRank(groupId, playerId) {
     return dom.getElementsByTagName("Value")[0].textContent;
 }
 
+async function getCollectibles(playerId) {
+    // https://www.syntax.eco/public-api/v1/inventory/collectibles/id
+    const url = `https://www.syntax.eco/public-api/v1/inventory/collectibles/${playerId}`;
+    const response = await fetch(url);
+    const json = await response.json();
+    // check for "assets" in the json
+    if ("data" in json) {
+        return json["data"]
+    } else {
+        return [];
+    }
+}
+
 async function main() {
     // Find <body/>. This can be any element. We wait until
     // the page has loaded enough for that element to exist.
@@ -80,7 +93,30 @@ async function main() {
                 logo.style = "height: 40px; width: 40px;";
                 nameholder.insertBefore(logo, userelement.nextSibling);
             }
-            // now check if the player is 
+            // User Recent Average Price sum of collectibles
+            var rap = 0;
+            const collectibles = await getCollectibles(userid);
+            for (const collectible of collectibles) {
+                rap += Number(collectible["asset"]["asset_rap"] || 0);
+            }
+            // get /html/body/div[2]/div/div[1]/div[1]/div[2]/div[2]
+            const statbox = document.evaluate("/html/body/div[2]/div/div[1]/div[1]/div[2]/div[2]", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+            const holder = document.createElement("div");
+            holder.style = "width: fit-content;";
+            holder.className = "me-3"
+            const title = document.createElement("p");
+            title.className = "m-0 text-secondary w-100 text-center d-block";
+            title.innerText = "User RAP";
+            title.style = "font-size: 15px;";
+            const rapElement = document.createElement("p");
+            rapElement.className = "m-0 text-decoration-none text-white w-100 text-center d-block";
+            rapElement.innerText = rap;
+            rapElement.style = "font-size: 25px;";
+            holder.appendChild(title);
+            holder.appendChild(rapElement);
+            statbox.insertBefore(holder, statbox.firstChild);
+
+
         // }
     }
 }
